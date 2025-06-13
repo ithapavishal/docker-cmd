@@ -1,0 +1,35 @@
+# login into the machine i.e vagrant ssh 
+
+1. docker container                 
+2. docker container ps                                      = list all running containers
+3. docker container ps -a                                   = list all containers, including that are not running currently
+4. docker container run ubuntu                              = running container with ubuntu image
+5. docker container run -it ubuntu /bin/bash
+   ip addrs show
+   pwd
+   whoami
+   uname -r                                                 = to check machine kernel
+   cat /etc/os-release
+   exit
+
+6. docker container run nginx                               = running container with nginx image
+7. docker container run -d nginx                            = running container in detached mode [i.e. -d = --detach ]
+8. docker container inspect container_name                  = inspect the container [check detailed information about that container ] 
+
+9. docker container exec -it container_name /bin/bash       = execute a command in a running container
+10. docker container logs container_name                    = show logs of the container
+11. docker container top container_name                     = show running processes in the container
+12. docker container stats container_name                   = show resource usage of the container
+
+13. ps -ef | grep container_name                            = show processes of the container
+14. ps -ef | grep PID                                       = show processes of the container
+
+15. docker container attach container_name                  = attach to the container [i.e background ma run bhairaheko container lai attach garna]
+
+prune command                                               = remove all stopped containers
+16. docker container prune                                  = remove all stopped containers
+17. docker container prune -a                               = remove all containers
+18. docker container stop container_name                    = stop the container
+19. docker container rm container_name                      = remove container
+20. docker container pause container_name                   = pause the container
+21. docker container rename old_name new_name               = rename the container

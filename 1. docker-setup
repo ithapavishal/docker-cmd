@@ -1,0 +1,18 @@
+# install docker - go to docker on google and follow install docker on ubuntu 
+
+# setup fresh machine
+
+1. docker system info
+2. vagrant ssh
+3. docker container ps
+
+# Normal user lai access dina
+4. newgrp docker
+5. docker container ps
+
+i. sudo usermod -aG docker $user    ==> exit garne ani feri vagrant login garne 
+
+    To allow user to access docker instantly run below command
+ii. newgrp docker
+
+

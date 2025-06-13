@@ -1,0 +1,108 @@
+# Custom Image build process
+
+1. vagrant ssh
+2. mkdir demo-imgdata
+3. cd demo-imgdata
+4. touch index.html                         -->         index.html
+                                                        <h1> Hello Stavanger! Welcome to the north </h1>
+5. cat index.html
+6. vim Dockerfile
+
+# After editing the Dockerfile
+
+7. docker build .
+
+- Kaile kahi ownership milena bhane Dockerfile edit garna didaina <- hamile ownership check garera ownership dina parna sakcha
+- vagrant bhitra home directory ma gayera aghi banayeko demo-imgdata/ ko ownership herna ls -l garera
+
+8. cd 
+9. ls -l
+10. sudo chown vagrant :vagrant demo-imgdata/   ==> yesma demo-imgdata/ ko ownership root lai matra thyo ==> vagrant user lai pani dina
+
+11. cd demo-imgdata/
+    ls
+12. docker images
+
+- dockerfile ma edit garepachi jailepani build garnu parcha image banauna
+
+13. docker build .
+    ls
+14. docker images
+
+Dockerfile
+FRom nginx:latest
+COPY index.html /usr/share/nginx/html/index.html
+
+EXPOSE 80
+CMD ['nginx, '-g', 'daemon off;']
+
+-  Yesma hamile already bhayeko nginx image ko top ma basera Image banauna lageko
+- aba hamile mathi banayeko Image bata container run garna
+
+15. docker container run -d --name customnginx -P image_id
+16. docker container ps
+
+- hamile ma browser ma kasto output aaucha bhanera terminal ma curl garera herna sakincha
+
+17. curl http://localhost:port_no
+18. docker container exec -it customnginx bash
+=>  now lets check inside this container 
+    ls
+    cd /usr/share/nginx/html/
+    ls
+19. cat index.html
+20. exit
+21. docker container exec -it customnginx bash
+    pwd
+=>  hamile yo path nai change garna sakchau
+    exit   ==> path change garna docker ma gayera garna sakincha 
+
+24. vim Dockerfile
+
+FROM nginx:latest
+COPY index.html /usr/share/nginx/html/index.html
+WORKDIR /usr/share/nginx
+EXPOSE 80
+CMD ['nginx', '-g', 'daemon off;']
+
+- aba dockerfile ma edit garisake pachi Image feri banaunu parcha => tesko lagi build garnu parcha
+
+25. docker build .
+26. docker images
+27. docker container inspect image_id
+28. docker image history image_id           ==> size increasse bhayeko , how size increased tyo herna
+
+- aba feri yo banayeko Image bata container banayera herau
+
+29. docker container ps -a
+30. docker container run -d --name localnginx1 -P image_id
+31. docker container ps
+32. docker container exec -it localnginx1 bash
+    pwd
+    whoami
+33. ls/home/
+34. cat /etc/os-release
+
+*********************  creating named Image ***********************************
+
+-  ahile samma mathi hamile naam nadi image banayeka thiyau aba naam diyera Image banau
+
+35. docker images
+36. docker image build -t nginxcustom:v1 .
+37. docker images
+    ls
+38. vim Dockerfile
+
+FROM nginx:latest
+RUN apt update
+RUN apt install -y net-tools
+COPY index.html /usr/share/nginx/html/index.html
+WORKDIR /usr/share/nginx
+EXPOSE 80
+CMD ['nginx', '-g', 'daemon off;']
+
+39. docker build -t nginxcustom:v2 .
+40. docker images
+
+- Jun line ma change cha tehibata or tespachi ko line ma feri rebuild garcha tara certain line pachi cha bhane purano line
+- cached use garcha changes bhayeko line ra tespachi matra build garcha.

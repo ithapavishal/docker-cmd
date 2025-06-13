@@ -1,0 +1,57 @@
+# docker image blueprint : docker image banaune naksha 
+
+1. docker images
+
+2. docker container run -d --name name_your_container image
+3. docker container run -d --name mynginx nginx
+   creates a container named mynginx based on docker image 'nginx' 
+                                        where, 'nginx' --> blueprint
+
+4. docker container run -d --name mynginx -p 80:80 nginx  
+   where, Syntax: -p <host_port>:<container_port>
+                    80 (first 80): This is the port on your host machine (your laptop/server) that you want to expose. When you access localhost:80 
+                                    (or your host's IP address on port 80) in your web browser, requests will be directed to this port.
+                    80 (second 80): This is the port inside the Docker container where the application (in this case, Nginx) is listening for incoming connections. 
+                                    The official Nginx image is configured to listen on port 80 by default.
+
+
+                    It maps port 80 on your host machine to port 80 inside the mynginx container. This allows you to access the Nginx web server running inside 
+                    the container by simply navigating to http://localhost (or http://your_host_ip) in your web browser.
+                                    0.0.0.0:80 -> 80/tcp
+
+To access this port forwarded container from outside your host machine,
+
+5. vagrant ssh
+6. curl http://localhost:80
+7. dpkg -l | grep -i nginx                  = to check if nginx is installed or not
+8. ipaddr show                              = if this IP is used in brwoser i.e. 192.168.56.116 , nginx page will open
+9. docker container ps
+10. docker container exec -it mynginx1 bash
+11. ls
+12. cd /usr/share/nginx/
+13. ls
+14. cd html/
+15. ls
+16. vim index.html
+    cat index.html      = brwoser ma run huney content 
+17. pwd                 = Yo bata aaune path ma copy garna
+    exit
+    aba yo content lai pverride garna       ==>                    <h1> Hello Interface </h1>
+                                                                   :wq!
+18. vim index.html              ==> yo index file mathi container ko yo path /usr/share/nginx/html ma copy garna [mynginx1 = name of container]
+
+19. docker container ps
+20. docker container cp index.html mynginx1:/usr/share/html/index.html              = check in browser using IP
+
+21. docker images
+22. dokcer image inspect        ==> exposed ports: { "80/tcp": {}}
+23. docker container ps
+24. docker container run -d --name mynginx2 -P nginx                   ==> aba ma arko nginx container run garchu tara portmapping garera haina, randomly chodera
+                                            capital P = yesle randomly port assign garcha
+                                            remotely kaam garda randomly port assign garda confusion huncha <-- tesaile hard coding portnmapping garnu parcha 
+25. docker container ps
+26. docker container rename
+27. docker container renmae mynginx2 nginx_container
+    docker container rename old_name new_name
+
+docker container ps

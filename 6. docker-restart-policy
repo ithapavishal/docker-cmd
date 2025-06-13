@@ -1,0 +1,35 @@
+# Docker restart policy : bhaneko hamro container haru kasari chalcha ra yedi tiniharu kunai karan ley banda bhayo bhane DOCKERley tiniharu lai 
+                          kasari handle garcha bhanne rules ho.
+
+1. docker container ps
+2. docker container inspect container_id | grep -i restart          ==> yesle default mode ma k cha restart policy tehi dincha => inspect garera
+                                                                        pani herna sakincha 
+3. docker container run -d --name rstart-policy-demo -p 8080:80 --restart always nginx
+   => restart policy ma always rakhda daemon/service restart garda container pani start huncha jahilepani
+
+4. docker container ps
+5. docker container inspect rstart-policy-policy-demo               = aba restart-policy ma pahila no thiyo, aba always ma change huncha
+
+# aba arko policy lagayera herau
+6. docker container run -d --najme rstart-policy-demo1 -p 8081:80 --restart unless-stopped nginx
+7. docker container ps
+8. docker container inspect rstart-policy-demo1
+9. docker container update --restart on-failure:2 mynginx2
+10. docker container inspect mynginx2
+11. docker container ps
+12. sudo systemctl restart docker
+
+# Agi restart gareko container lai stop garne
+13. docker container stop container_id
+14. docker systemctl restart docker
+15. docker container ps
+
+        WAIT  ==> multiple container ko case ma arko container/s stop bhayepachi matra install/print/ kehi kaam garnu parne 
+                  bhayeko case ma use garincha  
+
+        block one or more containers stop => then print their exit codes
+
+        EXIT CODE => hamile kasailai kaam lagayau ra usle hamile kaam kasari sakiyo ( sampanna ) bhayo bhanera sanket dincha 
+        exit code 0 => kaam ramrari sampanna bhayo i.e. zero-exit code
+                       sabai kura thik cha kunai samasya bhayena
+        non-zero    ==> samasya aayo kei gadbad bhayo

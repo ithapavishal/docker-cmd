@@ -1,0 +1,24 @@
+# copy file from container to host machine
+
+{ We can copy files from container to Host machine using the following command ==> for the debugging purpose }
+
+1. vagrant ssh
+2. docker container ps
+3. docker container exec -it container_name bash
+   ls                                               = lets copy entrypoint.sh from here
+   pwd
+   exit
+
+4. docker container cp container_name:source_path destination_path
+       where, 
+                source_path = container bhitra ko tyo file path
+
+5. docker container cp lucid_merkle:/docker-entrypoint.sh .                 = copy file from container to host machine
+   here the file was in slash(/) when checked using pwd so docker-entrypoint.sh path will be --> /docker-entrypoint.sh
+
+6. ls
+7. touch hello.txt                                  = now copy this file to container
+   ls
+
+8. docker container cp hello.txt lucid_merkle:/opt
+   docker container cp hello.txt container_name: copy_destination_path

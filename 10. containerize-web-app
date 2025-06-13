@@ -1,0 +1,35 @@
+Dockerfile
+
+FROM node
+LABEL np.com.upside.version=1.0
+WORKDIR /var/node
+COPY ./weather-app/package.json /var/node
+RUN npm install
+COPY ./weather-app/* /var/node
+EXPOSE 3000
+CMD ["node", "./bin/www"]
+
+1. vagrant ssh
+2. mkdir myweatherapp
+3. cd myweatherapp 
+   ls
+4. cp ../devops/docker/weather-app .
+5. ls weather-app/
+6. rm weather-app/package-lock.json
+7. ls weather-app/
+8. vim Dockerfile
+
+9. docker images build -t myweatherapp:v1
+10. docker images
+11. docker run -d --name nodejs -p 3000;3000 myweatherapp:v1
+
+12. docker images ps
+13. docker container logs
+14. docker image build -t myweatherapp:v2 .
+15. docker rm nodeapp
+
+16. docker container run -d --name nodeapp -p 3000:3000 myweatherapp:v2
+17. docker container ps
+18. docker container logs
+19. docker container exec -it nodeapp /bin/bash
+20. docker container prune

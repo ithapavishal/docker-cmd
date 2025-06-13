@@ -1,0 +1,33 @@
+# to create images from running containers
+# docker commit                       = Docker command that allows you to create a new Docker image from the current state of a running container.
+1. docker container run -d nginx
+2. dcker container ps
+3. docker container exec -it container_name bash    
+   => now work inside this container 
+   ifconfig
+   apt update
+   apt install net-tools        = for ifconfig package
+   vi
+   apt install vim
+   ifconfig
+   
+   { All the package installed in this container will be machine dependent meaning if we create another container 
+   using this IMAGE ==> it won't have theses packages }
+   # Now create image from this state fo this container 
+
+4. docker container ps
+5. docker container commit
+6. docker container commit -m "commit message" container_id
+7. docker container commit container_name/ID repository:[TAG]
+   docker container commit container _name/ID ubuntu:custom  [ or latest ]
+
+8. docker container ps
+9. docker images
+10. docker container run -d ubuntu:custom
+11. docker container exec -it container_name bash
+12. ifconfig
+    vim
+    cat /etc/os-release
+
+
+#  IN THIS WAY WE CAN CREATE OUR OWN IMAGE FROM A RUNNING CONTAINER 

@@ -1,0 +1,40 @@
+1. dokcer volume create
+2. docker volume ls
+3. docker volume rm
+4. docker volume inspect
+5. docker volume prune      = kasaile pani use nagareko volume delete garcha
+6. docker volume prune -a   = delete all volume 
+
+7. --mount flag is more explicit and feature rich compared to -v flag
+
+
+1. DOCKER VOLUME:
+        - independent file system managed entirely by Docker ans exists as a directory /var/lib/docker/volumes on the host machines.
+
+    i. using -v flag: ( --volume )
+
+        a. docker container run -v (or --volume ) <volume_name>:<container_path> <image_name>
+        or
+        docker container run -d --name <container_name> -v <volume_name>:<container_path> <image_name>
+
+
+    ii. --mount flag:
+        a. docker container run --mount type = volume, source=<volume_name>, target=<container_path> <image_name>
+        or
+        docker container run -d --name <container_name> --mount type =volume source = <volume_name>, target = <container_path> <image_name>
+
+
+2. BIND MOUNT:
+        - it may be stored anywhere on the host system 
+        - yesma instead of volume -> certain path lai nai Bind garchau (volume ma volume lai garinthyo )
+
+
+    i. using -v flag:
+        a. docker container run -v <host_path>:<container_path> <image_name>
+        or
+        docker container  run -d --name <container_name> -v <host_path>:<cotainer_path> <image_path>
+
+    ii. using --mount flag:
+        a. docker container run --mount type = bind, source = <host_path>, target = <container_path <image_name>>
+        or 
+        docker container run -d --name <container_name> --mount type = bind, source <host_path>, taregt = <container_path> <image_name>

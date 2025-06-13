@@ -1,0 +1,71 @@
+docker networking: 
+    - dokcer ko lagi use huney network haru create garne
+
+network drivers:
+overlay: multiple VMs ma run gareko multiple containers lai ek arka sanag communicate garna 
+         docker swarm ma use garchau
+
+
+1. docker netwrok 
+2. docker network ls
+3. docker network inspect bridge
+   docker network inspect network_name/ID
+
+4. docker container ps
+5. docker network create my-network
+6. docker network ls
+7. docker network inspect my-network
+   docker network inspect network_name/ID
+
+8. docker network connect my-network container_name
+   docker network connect my-network rstart-policy-demo            # kunai network ma yo network attach garna paryo bhane 
+
+9. docker network ls
+10.docker network inspect my-network
+
+   => container bhitra network ko IPV4 address herne ani container inspect garne
+
+11. docker container inspect rstart-policy-demo                 = container inspect garna
+                                                                = yesma pahila ko network pan attach huncha ani ahile ko my-network pani attach huncha 
+                                                                = Ip address herera ni verify garna sakincha 
+
+ABA hamilai kunai network disconnect/hatauna paryo bhane 
+
+12. docker network disconnect bridge rstart-policy-demo
+    docker network disconnect network_name container_name
+
+13. docker container inspect container_name
+14. docker network ls
+15. docker network
+
+
+******************************************    CUSTOM NETWORKS    *******************************************
+GOOGLE - ipaddressguide.com
+
+IP ranges haru rakhera custom network create garne:
+Normal ma default driver use huncha i.e. bridge network
+
+# Aba driver use garera kasari network create garne  : SUBNET gateway specify garera
+
+1. vagrant ssh
+2. docker network ls
+3. docker network inspect my-network  
+
+# SUBNET , gateway ra driver rakhera [ specify garera ] network create garna
+
+4. docker cnetwork create --subnet 192.168.1.0/24 --gateway 192.168.1 mycustomnetwork (create your network name here)
+5. docker cnetwork create --subnet 10.0.1.0/24 --gateway 10.0.1.1 mycustomnetwork (create your network name here)
+
+
+6. docker network ls
+7. docker network inspect mycustomnetwork
+
+8. docker container ps -a
+9. docker container prune       = remove all stopped containers
+
+# Unused network lai remove garna
+
+10. docker network prune                        = kunai pani container sanga attach bhayeko hunu hudaina  
+11. docker network prune -f                     = force remove unused network
+
+
