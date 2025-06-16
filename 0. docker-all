@@ -1,0 +1,173 @@
+I. General Docker Commands:
+
+    1.docker --version        ; Displays the Docker version installed.
+    2.docker info             ; Shows system-wide Docker information, including configurations, resources, and installed components.
+    3.docker help             : Provides help for Docker commands. You can also use docker <command> --help for specific command help.
+    4.docker login            : Logs you into Docker Hub (or a private registry) to push and pull images.
+    5.docker logout           : Logs you out of Docker Hub.
+    6.docker system df        : Shows Docker disk space usage.
+    7.docker system prune     : Removes unused Docker objects (stopped containers, unused networks, dangling images, build cache).
+
+
+II. Docker Image Commands:
+
+    1.docker images                                 : Lists all Docker images available on your system.
+    2.docker container ps -a                        ; Lists all containers, including those that are not running.
+    3.docker container ls                           : Lists all containers.
+    4.docker container stop                         : Stops a running container
+    5.docker container rm                           : Removes a stopped container..
+    6.docker container kill                         : Kills a running container.
+    9.docker container restart                      : Restarts a stopped container.
+    10.docker container run ubuntu                  : Runs a new container from an existing ubuntu image.
+    11.docker container run -d nginx                : Runs a new container from an existing nginx image in detached mode.
+    12.docker container exec -it bold_tesla bash    : to execute the bash command inside a running Docker container named bold_tesla in interactive mode.
+    13. docker container inspect bold_tesla         : to inspect the details of a running Docker container named bold_tesla
+    14. docker container logs bold_tesla            : to view the logs of a running Docker container named bold_tesla
+    15. docker container top bold_tesla             : to view the running processes inside a running Docker container named bold_tesla
+    16. docker container port bold_tesla            : to view the port mappings of a running Docker container named bold_tesla
+    17. docker container stats bold_tesla           : to view the resource usage of a running Docker container named bold_tesla
+    18. docker container attach bold_tesla          : to attach to a running Docker container named bold_tesla
+    19. docker container prune                      : to remove all stopped containers
+    20. docker container rm container_name_or_id    : to remove a stopped container
+
+    *************** CREATING A CONTAINER WITH A SPECIFIC NAME ***************
+
+    21. docker container run -d --name mynewcontainer nginx                 : to run a new container from an existing nginx image in detached mode 
+                                                                                and name it mynewcontainer
+    22. docker container run -d --name mynewcontainer -p 8080:80 nginx      : to run a new container from an existing nginx image in detached mode
+                                                                            and name it mynewcontainer and map port 8080 on the host to port 80
+    23. docker container run -d --name mynewcontainer -P nginx              : here capital P assigns random port
+
+
+    *************************  CUSTOM IMAGE BUILD   *************************
+
+    24. docker build .                              : to build a Docker image from a Dockerfile in the current directory
+    25. docker container run -d --name customnbuildginx -p image_name_or_id     : to run a new container from a custom image in detached mode
+    26. docker container inspect image_name_or_id                           : to inspect the details of a custom image
+    27. docker image build -t customnginx:v1 .                              : to build a custom image with a specific tag in current directory
+    28. docker image history image_name_or_id                               ; to view the history of a custom image
+
+
+
+II. Image Management Commands:
+
+    1.docker pull <image_name>[:<tag>]                                              : Downloads an image from Docker Hub (or a specified registry).
+                                                                                      If no tag is provided, it pulls the latest tag.
+        Example: docker pull ubuntu
+        Example: docker pull nginx:alpine
+
+    2.docker build -t <image_name>[:<tag>] <path_to_dockerfile>                     : Builds a Docker image from a Dockerfile.
+        Example: docker build -t myapp:1.0 . (builds from the current directory)
+    3.docker images or docker image ls: Lists all Docker images stored locally.
+    4.docker rmi <image_name>[:<tag>] or docker image rm <image_name>[:<tag>]       : Removes one or more Docker images.
+        xample: docker rmi myapp:1.0
+    5.docker search <search_term>                                                   :  Searches Docker Hub for images matching a given term.
+        Example: docker search ubuntu
+    6.docker push <image_name>[:<tag>]                                              : Uploads an image to Docker Hub (or a private registry).
+    7.docker tag <source_image>:<source_tag> <target_image>:<target_tag>            : Creates a new tag for an existing image. 
+                                                                                      This is often used before pushing an image to a registry with 
+                                                                                      a specific name/tag.
+    8.docker history <image_name>[:<tag>]                                           : Shows the history of an image, including the commands used 
+                                                                                      to build it.
+    9.docker save -o <output_file.tar> <image_name>[:<tag>]                         : Saves one or more images to a tar archive.
+    10.docker load -i <input_file.tar>                                              : Loads an image from a tar archive.
+
+
+III. Container Management Commands:
+
+    1.docker run <image_name>[:<tag>] [COMMAND] [ARG...]:               Creates and starts a new container from an image. 
+
+    where:
+        -d, --detach                            : Runs the container in detached (background) mode.
+        -p <host_port>                          :<container_port>: Maps a host port to a container port.
+        --name <container_name>                 : Assigns a custom name to the container.
+        -it                                     : Runs the container in interactive mode with a pseudo-TTY, useful for running shell commands inside.
+        --rm                                    : Automatically removes the container when it exits.
+        -v <host_path>:<container_path>         : Mounts a host volume into the container.
+        --env <KEY>=<VALUE> or -e <KEY>=<VALUE> : Sets environment variables inside the container.
+
+    2.docker ps or docker container ls              : Lists running Docker containers.
+    3.docker ps -a or docker container ls -a        : Lists all containers, including stopped ones.
+    4.docker ps -q or docker container ls -q        : Displays only the container IDs.
+    5.docker ps -l                                  : Shows the last created container (even if stopped).
+    6.docker start <container_name_or_id>           : Starts one or more stopped containers.
+    7.docker stop <container_name_or_id>            : Stops one or more running containers gracefully.
+    8.docker restart <container_name_or_id>         : Restarts one or more containers.
+    9.docker kill <container_name_or_id>            : Forcefully stops one or more running containers (sends SIGKILL).
+    10.docker rm <container_name_or_id> or docker container rm <container_name_or_id>   : Removes one or more stopped containers. Use -f to force 
+                                                                                            removal of a running container.
+    11.docker exec -it <container_name_or_id> <command>                                 : Executes a command inside a running container. Often 
+                                                                                            used to get a shell inside a container.
+        Example: docker exec -it mycontainer bash
+
+    12.docker logs <container_name_or_id>           : Fetches the logs of a container.
+    13.docker logs -f <container_name_or_id>        : Follows the log output in real-time.
+    14.docker inspect <container_name_or_id_or_image_name_or_id>                        : Displays detailed low-level information about Docker objects (containers, images, networks, volumes).
+    15.docker rename <old_name> <new_name>          : Renames a container.
+    16.docker pause <container_name_or_id>          : Pauses all processes within one or more running containers.
+    17.docker unpause <container_name_or_id>        : Unpauses all processes within one or more paused containers.
+    18.docker cp <source_path> <destination_path>   : Copies files/folders between a container and the local filesystem.
+        Example: docker cp mycontainer:/app/data.txt . (copy from container to host)
+        Example: docker cp ./local_file.txt mycontainer:/tmp/ (copy from host to container)
+
+    19.docker top <container_name_or_id>            : Displays the running processes of a container.
+    20.docker stats [container_name_or_id]          : Displays a live stream of container(s) resource usage statistics (CPU, memory, network I/O, disk I/O).
+    21.docker commit <container_name_or_id> <new_image_name>[:<tag>]                    : Creates a new image from a container's changes.
+
+
+IV. Network Management Commands:
+
+    1.docker network ls                                                 : Lists all Docker networks.
+    2.docker network create <network_name>                              : Creates a new Docker network.
+    3.docker network connect <network_name> <container_name_or_id>      : Connects a container to a Docker network.
+    4.docker network disconnect <network_name> <container_name_or_id>   : Disconnects a container from a Docker network.
+    5.docker network inspect <network_name_or_id>                       : Displays detailed information about a Docker network.
+    6.docker network rm <network_name_or_id>                            : Removes one or more Docker networks.
+
+
+V. Volume Management Commands:
+
+    1.docker volume ls                                                    : Lists all Docker volumes.
+    2.docker volume create <volume_name>                                  : Creates a new Docker volume.
+    3.docker volume inspect <volume_name_or_id>                           : Displays detailed information about a Docker volume.
+    4.docker volume rm <volume_name_or_id>                                : Removes one or more Docker volumes.
+    5.docker volume prune                                                 : Removes all unused local volumes.
+
+
+VI. Docker Compose Commands:
+
+    Docker Compose is a tool for defining and running multi-container Docker applications. It uses a YAML file (typically docker-compose.yml) to configure application services.
+
+    1.docker compose up [OPTIONS]: Builds, (re)creates, starts, and attaches to containers for a service.
+        where:
+            -d          : Runs containers in detached mode.
+            --build     : Rebuilds images before starting containers.
+    2.docker compose down [OPTIONS]                                     : Stops and removes containers, networks, images, and volumes created by up.
+    3.docker compose ps                                                 : Lists containers in a Compose project.
+    4.docker compose logs [SERVICE...]                                  : Views output from containers.
+    5.docker compose exec [OPTIONS] SERVICE COMMAND [ARGS...]           : Executes a command in a running container.
+    6.docker compose build [OPTIONS] [SERVICE...]                       : Builds or rebuilds services.
+    7.docker compose pull [OPTIONS] [SERVICE...]                        : Pulls service images.
+    8.docker compose restart [OPTIONS] [SERVICE...]                     : Restarts service containers.
+    9.docker compose stop [OPTIONS] [SERVICE...]                        : Stops service containers.
+    10.docker compose start [OPTIONS] [SERVICE...]                      : Starts service containers.
+    11.docker compose rm [OPTIONS] [SERVICE...]                         : Removes stopped service containers.
+
+
+VII. Docker Swarm Commands (for orchestration):
+
+    Docker Swarm mode is a native clustering solution for Docker.
+
+    1.docker swarm init                                                           : Initializes a new swarm.
+    2.docker swarm join <IP>:<PORT>                                               : Joins a node to an existing swarm.
+    3.docker swarm leave: Leaves a swarm.
+    4.docker node ls: Lists nodes in the swarm.
+    5.docker service create [OPTIONS] IMAGE [COMMAND] [ARGS...]                   : Creates a new service.
+    6.docker service ls                                                           : Lists services in the swarm.
+    7.docker service ps <service_name_or_id>                                      : Lists the tasks (containers) for a service.
+    8.docker service scale <service_name>=<replicas>                              : Scales a service to a desired number of replicas.
+    9.docker service rm <service_name_or_id>                                      : Removes one or more services.
+    10.docker stack deploy -c <compose_file.yml> <stack_name>                      : Deploys a new stack or updates an existing stack.
+    11.docker stack ls                                                             : Lists stacks.
+    12.docker stack services <stack_name>                                          : Lists services in a stack.
+    13.docker stack rm <stack_name>                                                : Removes a stack.
