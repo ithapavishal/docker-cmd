@@ -10,7 +10,7 @@ I. General Docker Commands:
 
 
 II. Docker Image Commands:
-
+                    
     1.docker images                                 : Lists all Docker images available on your system.
     2.docker container ps -a                        ; Lists all containers, including those that are not running.
     3.docker container ls                           : Lists all containers.
